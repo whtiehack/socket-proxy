@@ -3,7 +3,7 @@
  */
 
 var net = require('net');
-var config = require('./config.json');
+
 
 var CONFIG_FIELD = {
     REMOTEIP:'remoteip',
@@ -12,12 +12,23 @@ var CONFIG_FIELD = {
 };
 
 
-//start all proxy
-for(var k in config){
-    startProxy(k,config[k]);
+exports.start = start;
+
+/**
+ * start all proxy
+ * @param config
+ */
+function start(config){
+    if(!config){
+        throw new Error('no config set');
+    }
+
+    for(var k in config){
+        startProxy(k,config[k]);
+    }
+
+
 }
-
-
 
 
 
@@ -55,9 +66,16 @@ function startProxy(name,config){
             remote.destroy();
         });
 
+        var connectOption = {port:config[CONFIG_FIELD.REMOTEPORT],host:config[CONFIG_FIELD.REMOTEIP]};
         //proxy client
-        remote = net.connect({port:config[CONFIG_FIELD.REMOTEPORT],host:config[CONFIG_FIELD.REMOTEIP]},function(err){
-            info('remote connected:??:',err);
+        remote = net.connect(connectOption,function(err){
+            if(err){
+                error('remote connected err!',err);
+                client.end(err);
+            }else{
+                info('remote connected ',connectOption);
+            }
+
         });
         remote.on('end',function(arg){
             warn('remote end!~:',client.remoteAddress);
