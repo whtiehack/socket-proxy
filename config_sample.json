@@ -1,0 +1,7 @@
+{
+  "you custom name":{
+    "remoteip":"127.0.0.1",
+    "remoteport":3306,
+    "listenport":3333
+  }
+}
