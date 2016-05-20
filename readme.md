@@ -1,6 +1,10 @@
 
 # Socket proxy
 
+## Description
+socket agent! proxy. support custom setting
+
+support any tcp protocol!  e.g. http https ssh ftp
 
 ### simple config.json
 ```
