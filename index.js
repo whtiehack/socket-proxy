@@ -53,16 +53,12 @@ function startProxy(name,config){
 
     var server = net.createServer(/** @param {Socket}client**/function(client){
         var remote;
-        info('client connected:',client.remoteAddress);
+        info('client connected:',client.remoteAddress+':'+client.remotePort);
         client.on('end',function(){
-            debug('client disconnected!',client.remoteAddress);
-            remote.end();
-        });
-        client.on('data',function(chunk){
-            remote.write(chunk);
+            debug('client disconnected!',client.remoteAddress+':'+client.remotePort);
         });
         client.on('error',function(err){
-            error('client error:',client.remoteAddress,err);
+            error('client error:',client.remoteAddress+':'+client.remotePort,err);
             remote.destroy();
         });
 
@@ -74,15 +70,13 @@ function startProxy(name,config){
                 client.end(err);
             }else{
                 info('remote connected ',connectOption);
+                client.pipe(remote);
+                remote.pipe(client);
             }
 
         });
         remote.on('end',function(arg){
-            warn('remote end!~:',client.remoteAddress);
-            client.end();
-        });
-        remote.on('data',function(chunk){
-            client.write(chunk);
+            debug('remote disconnected!~:',client.remoteAddress);
         });
         remote.on('error',function(err){
             error('remote error!~:',client.remoteAddress,err);
