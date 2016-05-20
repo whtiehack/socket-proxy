@@ -56,6 +56,7 @@ function startProxy(name,config){
         info('client connected:',client.remoteAddress+':'+client.remotePort);
         client.on('end',function(){
             debug('client disconnected!',client.remoteAddress+':'+client.remotePort);
+            remote.destroy();
         });
         client.on('error',function(err){
             error('client error:',client.remoteAddress+':'+client.remotePort,err);
@@ -77,6 +78,7 @@ function startProxy(name,config){
         });
         remote.on('end',function(arg){
             debug('remote disconnected!~:',client.remoteAddress);
+            client.destroy();
         });
         remote.on('error',function(err){
             error('remote error!~:',client.remoteAddress,err);
