@@ -5,9 +5,17 @@
 var net = require('net');
 var config = require('./config.json');
 
+var CONFIG_FIELD = {
+    REMOTEIP:'remoteip',
+    REMOTEPORT:'remoteport',
+    LISTENPORT:'listenport'
+};
 
-startProxy('mysql',config.mysql);
 
+//start all proxy
+for(var k in config){
+    startProxy(k,config[k]);
+}
 
 
 
@@ -37,6 +45,7 @@ function startProxy(name,config){
         info('client connected:',client.remoteAddress);
         client.on('end',function(){
             debug('client disconnected!',client.remoteAddress);
+            remote.end();
         });
         client.on('data',function(chunk){
             remote.write(chunk);
@@ -47,12 +56,12 @@ function startProxy(name,config){
         });
 
         //proxy client
-        remote = net.connect({port:config.remoteport,host:config.remoteip},function(err){
+        remote = net.connect({port:config[CONFIG_FIELD.REMOTEPORT],host:config[CONFIG_FIELD.REMOTEIP]},function(err){
             info('remote connected:??:',err);
         });
-        remote.on('end',function(err){
-            error('remote error!~:',client.remoteAddress,err);
-            client.destroy();
+        remote.on('end',function(arg){
+            warn('remote end!~:',client.remoteAddress);
+            client.end();
         });
         remote.on('data',function(chunk){
             client.write(chunk);
@@ -66,11 +75,11 @@ function startProxy(name,config){
     });
 
 
-    server.listen(config.listenport,function(err){
+    server.listen(config[CONFIG_FIELD.LISTENPORT],function(err){
         if(err){
-            error('listen porterror:'+config.listenport);
+            error('listen porterror:'+config[CONFIG_FIELD.LISTENPORT]);
         }else{
-            info('listen port:'+config.listenport+' success!!');
+            info('listen port:'+config[CONFIG_FIELD.LISTENPORT]+' success!!');
         }
     });
 }
