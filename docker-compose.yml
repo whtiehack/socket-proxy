@@ -1,0 +1,24 @@
+# only for test
+version: '3'
+services:
+  mongodb-proxy:
+    image: "smallwhite/socket-proxy"
+    environment:
+    - REMOTE_PORT=27017
+    - REMOTE_HOST=localhost
+    - LOCAL_LISTEN_PORT=27016
+    - PROXY_NAME="mongodb proxy"
+  mysql-proxy:
+    build: .
+    environment:
+    - REMOTE_PORT=3306
+    - REMOTE_HOST=localhost
+    - LOCAL_LISTEN_PORT=3305
+    - PROXY_NAME="mysql proxy"
+  redis-proxy:
+    build: .
+    environment:
+    - REMOTE_PORT=6379
+    - REMOTE_HOST=localhost
+    - LOCAL_LISTEN_PORT=6378
+    - PROXY_NAME="redis proxy"
