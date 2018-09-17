@@ -1,6 +1,6 @@
 {
   "name": "socket-proxy",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "socket agent! proxy. support custom setting",
   "main": "index.js",
   "scripts": {

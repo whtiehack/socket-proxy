@@ -40,6 +40,10 @@ docker run --network host -e REMOTE_PORT=3006 -e REMOTE_HOST=127.0.0.1 -e LOCAL_
 
 // or  full configs
 docker run --network host -e CONFIGS="{\"you custom name\":{\"remoteip\":\"127.0.0.1\",\"remoteport\":3306,\"listenport\":3333},\"you custom name 2\":{\"remoteip\":\"127.0.0.1\",\"remoteport\":6379,\"listenport\":6378}}" -d smallwhite/socket-proxy
+
+// or edit you self compose
+
+docker-compose up
 ```
 
 
