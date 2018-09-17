@@ -34,6 +34,10 @@ npm install socket-proxy --save
 
 ## Docker
 
+[![](https://images.microbadger.com/badges/image/smallwhite/socket-proxy.svg)](https://microbadger.com/images/smallwhite/socket-proxy "Get your own image badge on microbadger.com")
+
+[![](https://images.microbadger.com/badges/version/smallwhite/socket-proxy.svg)](https://microbadger.com/images/smallwhite/socket-proxy "Get your own version badge on microbadger.com")
+
 ```
 docker pull smallwhite/socket-proxy
 docker run --network host -e REMOTE_PORT=3006 -e REMOTE_HOST=127.0.0.1 -e LOCAL_LISTEN_PORT=3005 -d smallwhite/socket-proxy
