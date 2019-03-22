@@ -1,5 +1,5 @@
 
-FROM node:8.12.0-alpine
+FROM node:8.15.1-alpine
 
 ADD . /code
 
