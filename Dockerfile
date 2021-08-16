@@ -1,5 +1,5 @@
 
-FROM node:16.6.1-alpine
+FROM node:16.6.2-alpine
 
 ADD . /code
 
